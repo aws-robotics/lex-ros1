@@ -1,0 +1,3 @@
+<launch>
+    <test test-name="test_lex_node" pkg="lex_node" type="test_lex_node"/>
+</launch>

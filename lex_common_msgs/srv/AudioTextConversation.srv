@@ -1,0 +1,13 @@
+# type corresponds to https://docs.aws.amazon.com/lex/latest/dg/API_runtime_PostContent.html content_type
+string content_type
+string accept_type
+string text_request
+# used audio data for convenience to work with audio_common
+audio_common_msgs/AudioData audio_request
+---
+string text_response
+audio_common_msgs/AudioData audio_response
+lex_common_msgs/KeyValue[] slots
+string intent_name
+string message_format_type
+string dialog_state
