@@ -11,10 +11,12 @@
   <license>Apache 2.0</license>
 
 
+  <build_depend>message_generation</build_depend>
+
   <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>message_runtime</exec_depend>
 
   <depend>std_msgs</depend>
   <depend>audio_common_msgs</depend>
-  <depend>message_generation</depend>
-  <depend>message_runtime</depend>
 </package>
