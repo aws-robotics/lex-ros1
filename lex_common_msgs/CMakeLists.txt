@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8.3)
 project(lex_common_msgs)
 
 find_package(catkin REQUIRED COMPONENTS
-        roscpp
         std_msgs
         audio_common_msgs
         message_generation
