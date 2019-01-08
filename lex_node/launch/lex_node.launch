@@ -3,6 +3,7 @@
     <arg name="node_name" default="lex_node" />
     <!-- If a config file argument is provided by the caller then we will load it into the node's namespace -->
     <arg name="config_file" default="" />
+    <!-- The output argument sets the node's stdout/stderr location. Set to 'screen' to see this node's output in the terminal. -->
     <arg name="output" default="log" />
 
     <node name="$(arg node_name)" pkg="lex_node" type="lex_node" output="$(arg output)">
