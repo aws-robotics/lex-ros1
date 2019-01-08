@@ -3,8 +3,9 @@
     <arg name="node_name" default="lex_node" />
     <!-- If a config file argument is provided by the caller then we will load it into the node's namespace -->
     <arg name="config_file" default="" />
+    <arg name="output" default="log" />
 
-    <node name="$(arg node_name)" pkg="lex_node" type="lex_node">
+    <node name="$(arg node_name)" pkg="lex_node" type="lex_node" output="$(arg output)">
         <!-- If the caller specified a config file then load it here. -->
         <rosparam if="$(eval config_file!='')" command="load" file="$(arg config_file)"/>
     </node>
