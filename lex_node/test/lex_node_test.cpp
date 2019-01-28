@@ -26,7 +26,11 @@
 #include <lex_node/lex_node.h>
 #include <ros/ros.h>
 
+#define PARAM_NS_SEPARATOR "/"
+#define PARAM_NS_SEPARATOR_CHAR '/'
+
 using namespace Aws;
+using namespace Aws::Client;
 
 namespace Aws {
 namespace Lex {
@@ -97,7 +101,7 @@ protected:
 /**
  * Parameter reader that sets the output using provided std::mapS.
  */
-class TestParameterReader : public Client::ParameterReaderInterface
+class TestParameterReader : public ParameterReaderInterface
 {
 public:
   TestParameterReader() {}
@@ -122,7 +126,12 @@ public:
     }
     return result;
   }
-  AwsError ReadBool(const char * name, bool & out) const { return AWS_ERR_NOT_FOUND; }
+
+  AwsError ReadBool(const char * name, bool & out) const
+  {
+    return AWS_ERR_NOT_FOUND;
+  }
+
   AwsError ReadStdString(const char * name, std::string & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
@@ -132,6 +141,7 @@ public:
     }
     return result;
   }
+  
   AwsError ReadString(const char * name, String & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
@@ -141,15 +151,27 @@ public:
     }
     return result;
   }
+  
   AwsError ReadMap(const char * name, std::map<std::string, std::string> & out) const
   {
     return AWS_ERR_NOT_FOUND;
   }
+  
   AwsError ReadList(const char * name, std::vector<std::string> & out) const
   {
     return AWS_ERR_NOT_FOUND;
   }
-  AwsError ReadDouble(const char * name, double & out) const { return AWS_ERR_NOT_FOUND; }
+
+  AwsError ReadDouble(const char * name, double & out) const
+  {
+    return AWS_ERR_NOT_FOUND;
+  }
+
+private:
+  std::string FormatParameterPath(const Client::ParameterPath & param_path) const
+  {
+    return param_path.get_resolved_path(PARAM_NS_SEPARATOR_CHAR, PARAM_NS_SEPARATOR_CHAR);
+  }
 
   std::map<std::string, int> int_map_;
   std::map<std::string, std::string> string_map_;
@@ -195,7 +217,7 @@ public:
       return LexRuntimeService::Model::PostContentOutcome(std::move(result));
     } else {
       return LexRuntimeService::Model::PostContentOutcome(
-        Client::AWSError<LexRuntimeService::LexRuntimeServiceErrors>());
+        AWSError<LexRuntimeService::LexRuntimeServiceErrors>());
     }
   }
 
