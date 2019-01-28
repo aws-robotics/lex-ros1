@@ -26,7 +26,11 @@
 #include <lex_node/lex_node.h>
 #include <ros/ros.h>
 
+#define PARAM_NS_SEPARATOR "/"
+#define PARAM_NS_SEPARATOR_CHAR '/'
+
 using namespace Aws;
+using namespace Aws::Client;
 
 namespace Aws {
 namespace Lex {
@@ -97,7 +101,7 @@ protected:
 /**
  * Parameter reader that sets the output using provided std::mapS.
  */
-class TestParameterReader : public Client::ParameterReaderInterface
+class TestParameterReader : public ParameterReaderInterface
 {
 public:
   TestParameterReader() {}
@@ -113,43 +117,46 @@ public:
                    {"aws_client_configuration/region", "us-west-2"}};
   }
 
-  AwsError ReadInt(const char * name, int & out) const
+  AwsError ReadInt(const ParameterPath & parameter_path, int & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
+    std::string name = parameter_path.get_resolved_path(PARAM_NS_SEPARATOR_CHAR, PARAM_NS_SEPARATOR_CHAR);
     if (int_map_.count(name) > 0) {
       out = int_map_.at(name);
       result = AWS_ERR_OK;
     }
     return result;
   }
-  AwsError ReadBool(const char * name, bool & out) const { return AWS_ERR_NOT_FOUND; }
-  AwsError ReadStdString(const char * name, std::string & out) const
+  AwsError ReadBool(const ParameterPath & parameter_path, bool & out) const { return AWS_ERR_NOT_FOUND; }
+  AwsError ReadStdString(const ParameterPath & parameter_path, std::string & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
+    std::string name = parameter_path.get_resolved_path(PARAM_NS_SEPARATOR_CHAR, PARAM_NS_SEPARATOR_CHAR);
     if (string_map_.count(name) > 0) {
       out = string_map_.at(name);
       result = AWS_ERR_OK;
     }
     return result;
   }
-  AwsError ReadString(const char * name, String & out) const
+  AwsError ReadString(const ParameterPath & parameter_path, String & out) const
   {
     AwsError result = AWS_ERR_NOT_FOUND;
+    std::string name = parameter_path.get_resolved_path(PARAM_NS_SEPARATOR_CHAR, PARAM_NS_SEPARATOR_CHAR);
     if (string_map_.count(name) > 0) {
       out = string_map_.at(name).c_str();
       result = AWS_ERR_OK;
     }
     return result;
   }
-  AwsError ReadMap(const char * name, std::map<std::string, std::string> & out) const
+  AwsError ReadMap(const ParameterPath & parameter_path, std::map<std::string, std::string> & out) const
   {
     return AWS_ERR_NOT_FOUND;
   }
-  AwsError ReadList(const char * name, std::vector<std::string> & out) const
+  AwsError ReadList(const ParameterPath & parameter_path, std::vector<std::string> & out) const
   {
     return AWS_ERR_NOT_FOUND;
   }
-  AwsError ReadDouble(const char * name, double & out) const { return AWS_ERR_NOT_FOUND; }
+  AwsError ReadDouble(const ParameterPath & parameter_path, double & out) const { return AWS_ERR_NOT_FOUND; }
 
   std::map<std::string, int> int_map_;
   std::map<std::string, std::string> string_map_;
@@ -195,7 +202,7 @@ public:
       return LexRuntimeService::Model::PostContentOutcome(std::move(result));
     } else {
       return LexRuntimeService::Model::PostContentOutcome(
-        Client::AWSError<LexRuntimeService::LexRuntimeServiceErrors>());
+        AWSError<LexRuntimeService::LexRuntimeServiceErrors>());
     }
   }
 
