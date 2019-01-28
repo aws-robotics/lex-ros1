@@ -100,7 +100,7 @@ int CopyResult(Aws::LexRuntimeService::Model::PostContentResult & result,
   if (slot_json.WasParseSuccessful()) {
     AWS_LOGSTREAM_DEBUG(__func__, "slot_json: " << slot_string);
 
-    auto view = slot_json.GetAllObjects();
+    auto view = slot_json.View().GetAllObjects();
     response.slots = std::vector<lex_common_msgs::KeyValue>(view.size());
     auto response_it = response.slots.begin();
     for (auto & element : view) {
