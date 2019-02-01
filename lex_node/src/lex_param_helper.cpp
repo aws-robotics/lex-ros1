@@ -16,6 +16,9 @@
 #include <aws/core/utils/logging/LogMacros.h>
 #include <lex_node/lex_param_helper.h>
 
+using Aws::Client::ParameterPath;
+
+
 namespace Aws {
 namespace Lex {
 
@@ -23,9 +26,9 @@ LexConfiguration LoadLexParameters(const Client::ParameterReaderInterface & para
 {
   LexConfiguration lex_configuration;
   bool is_invalid = false;
-  is_invalid |= (bool)parameter_interface.ReadStdString(kBotAliasKey, lex_configuration.bot_alias);
-  is_invalid |= (bool)parameter_interface.ReadStdString(kBotNameKey, lex_configuration.bot_name);
-  is_invalid |= (bool)parameter_interface.ReadStdString(kUserIdKey, lex_configuration.user_id);
+  is_invalid |= static_cast<bool>(parameter_interface.ReadParam(ParameterPath(kBotAliasKey), lex_configuration.bot_alias));
+  is_invalid |= static_cast<bool>(parameter_interface.ReadParam(ParameterPath(kBotNameKey), lex_configuration.bot_name));
+  is_invalid |= static_cast<bool>(parameter_interface.ReadParam(ParameterPath(kUserIdKey), lex_configuration.user_id));
   if (is_invalid) {
     AWS_LOG_INFO(__func__, "Lex configuration not fully specified");
     throw std::invalid_argument("Lex configuration not fully specified");
