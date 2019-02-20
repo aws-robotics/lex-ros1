@@ -4,6 +4,7 @@ project(lex_node)
 add_compile_options(-std=c++11)
 
 find_package(aws_common REQUIRED)
+find_package(lex_common REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -38,15 +39,16 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${AWSSDK_INCLUDE_DIR}
+  ${lex_common_INCLUDE_DIR}
 )
 
 add_library(${LEX_LIBRARY_TARGET}
   src/lex_node.cpp
-  src/lex_param_helper.cpp
 )
 
 target_link_libraries(${LEX_LIBRARY_TARGET}
   ${aws_common_LIBRARIES}
+  ${lex_common_LIBRARIES}
   ${catkin_LIBRARIES}
   ${OUTPUT}
 )
@@ -84,6 +86,18 @@ install(DIRECTORY config/ DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
 #############
 
 if(CATKIN_ENABLE_TESTING)
+  if(NOT GMOCK_FOUND AND NOT TARGET gmock)
+    include_directories(/usr/include/gmock /usr/src/gmock)
+    add_library(gmock /usr/src/gmock/src/gmock-all.cc)
+  endif()
+  catkin_destinations()
+
+  if(DEFINED GMOCK_LIBRARIES)
+    set(GMOCK_LIBRARY ${GMOCK_LIBRARIES})
+  else()
+    set(GMOCK_LIBRARY gmock)
+  endif()
+
   find_package(rostest REQUIRED)
 
   add_rostest_gtest(test_lex_node
@@ -96,5 +110,7 @@ if(CATKIN_ENABLE_TESTING)
     PRIVATE ${catkin_INCLUDE_DIRS}
   )
 
-  target_link_libraries(test_lex_node ${PROJECT_NAME}_lib)
+  target_link_libraries(test_lex_node
+          ${PROJECT_NAME}_lib
+          ${GMOCK_LIBRARY})
 endif()

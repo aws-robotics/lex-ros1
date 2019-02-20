@@ -55,7 +55,10 @@ To build from source you'll need to create a new workspace, clone and checkout t
 _Note: Replace __`{MAJOR.VERSION}`__ below with the latest major version number to get the latest release branch._
 
         cd ~/ros-workspace/src
-        git clone https://github.com/aws-robotics/lex-ros1.git -b release-v{MAJOR.VERSION}
+        git clone https://github.com/aws-robotics/utils-common.git
+        git clone https://github.com/aws-robotics/utils-ros1.git
+        git clone https://github.com/aws-robotics/lex-common.git
+        git clone https://github.com/aws-robotics/lex-ros1.git
 
 - Install dependencies
 
