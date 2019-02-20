@@ -7,16 +7,16 @@ find_package(catkin REQUIRED COMPONENTS
         message_generation
         )
 
- add_message_files(
-   DIRECTORY msg
-   FILES
-   KeyValue.msg
- )
+add_message_files(
+        DIRECTORY msg
+        FILES
+        KeyValue.msg
+)
 
 add_service_files(
-  DIRECTORY srv
-  FILES
-  AudioTextConversation.srv
+        DIRECTORY srv
+        FILES
+        AudioTextConversation.srv
 )
 
 # add_action_files(
