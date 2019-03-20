@@ -2,8 +2,8 @@
 Changelog for package lex_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.0 (2019-03-20)
+------------------
 * Update to use non-legacy ParameterReader API (`#12 <https://github.com/aws-robotics/lex-ros1/issues/12>`_)
 * Update to use new ParameterReader API (`#10 <https://github.com/aws-robotics/lex-ros1/issues/10>`_)
   * update lex_node_test to use the new ParameterReader API
