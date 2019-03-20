@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>lex_common_msgs</name>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
   <description>Common messages for interacting with Amazon Lex using the lex_node package</description>
   <url>http://wiki.ros.org/lex_common_msgs</url>
 
