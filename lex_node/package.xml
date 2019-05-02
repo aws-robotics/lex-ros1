@@ -18,5 +18,8 @@
   <depend>lex_common_msgs</depend>
   <depend>aws_common</depend>
   <depend>aws_ros1_common</depend>
+  
+  <test_depend>gtest</test_depend>
+  <test_depend>google-mock</test_depend>
   <test_depend>rostest</test_depend>
 </package>
