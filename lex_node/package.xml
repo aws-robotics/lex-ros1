@@ -15,8 +15,8 @@
 
   <depend>roscpp</depend>
   <depend>std_msgs</depend>
-  <depend version_lt='2.0.0'>lex_common_msgs</depend>
-  <depend version_lt='2.0.0'>aws_common</depend>
-  <depend version_lt='2.0.0'>aws_ros1_common</depend>
+  <depend>lex_common_msgs</depend>
+  <depend>aws_common</depend>
+  <depend>aws_ros1_common</depend>
   <test_depend>rostest</test_depend>
 </package>
