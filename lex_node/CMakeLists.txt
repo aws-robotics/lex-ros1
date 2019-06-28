@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(lex_node)
 
-add_compile_options(-std=c++11)
-
-find_package(aws_common REQUIRED)
+## Compile as C++11, supported in ROS Kinetic and newer
+set(CMAKE_CXX_STANDARD 11)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   lex_common_msgs
+  aws_common
   aws_ros1_common
 )
 
@@ -85,16 +85,37 @@ install(DIRECTORY config/ DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
 
 if(CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
-
-  add_rostest_gtest(test_lex_node
-    test/test_lex_node.test
-    test/lex_node_test.cpp
-  )
-
-  target_include_directories(test_lex_node
-    PRIVATE include
-    PRIVATE ${catkin_INCLUDE_DIRS}
-  )
-
-  target_link_libraries(test_lex_node ${PROJECT_NAME}_lib)
+  find_package(GMock QUIET)
+  if(GMOCK_FOUND)
+    add_rostest_gmock(test_lex_node
+      test/test_lex_node.test
+      test/lex_node_test.cpp
+    )
+    target_include_directories(test_lex_node PRIVATE
+      include
+      ${catkin_INCLUDE_DIRS}
+      ${GMOCK_INCLUDE_DIRS}
+    )
+    target_link_libraries(test_lex_node
+      ${PROJECT_NAME}_lib
+      ${catkin_LIBRARIES}
+      ${GMOCK_BOTH_LIBRARIES}
+    )
+  else()
+    include_directories(/usr/include/gmock /usr/src/gmock)
+    add_library(${PROJECT_NAME}_libgmock SHARED /usr/src/gmock/src/gmock-all.cc)
+    add_rostest_gtest(test_lex_node
+      test/test_lex_node.test
+      test/lex_node_test.cpp
+    )
+    target_include_directories(test_lex_node PRIVATE
+      include
+      ${catkin_INCLUDE_DIRS}
+    )   
+    target_link_libraries(test_lex_node
+      ${PROJECT_NAME}_lib
+      ${catkin_LIBRARIES}
+      ${PROJECT_NAME}_libgmock
+    )
+  endif()
 endif()
