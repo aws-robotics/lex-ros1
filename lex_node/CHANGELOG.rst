@@ -2,8 +2,8 @@
 Changelog for package lex_node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.1 (2019-08-01)
+------------------
 * increment patch version (`#25 <https://github.com/aws-robotics/lex-ros1/issues/25>`_)
   Signed-off-by: Miaofei <miaofei@amazon.com>
 * Add gtest and gmock as test dependencies (`#17 <https://github.com/aws-robotics/lex-ros1/issues/17>`_)
