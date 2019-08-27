@@ -7,9 +7,10 @@ set(CMAKE_CXX_STANDARD 11)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
-  lex_common_msgs
   aws_common
   aws_ros1_common
+  lex_common_msgs
+  lex_common
 )
 
 if(AWSSDK_FOUND)
