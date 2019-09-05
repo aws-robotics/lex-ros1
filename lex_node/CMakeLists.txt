@@ -7,9 +7,10 @@ set(CMAKE_CXX_STANDARD 11)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
-  lex_common_msgs
   aws_common
   aws_ros1_common
+  lex_common_msgs
+  lex_common
 )
 
 if(AWSSDK_FOUND)
@@ -38,15 +39,16 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${AWSSDK_INCLUDE_DIR}
+  ${lex_common_INCLUDE_DIR}
 )
 
 add_library(${LEX_LIBRARY_TARGET}
   src/lex_node.cpp
-  src/lex_param_helper.cpp
 )
 
 target_link_libraries(${LEX_LIBRARY_TARGET}
   ${aws_common_LIBRARIES}
+  ${lex_common_LIBRARIES}
   ${catkin_LIBRARIES}
   ${OUTPUT}
 )

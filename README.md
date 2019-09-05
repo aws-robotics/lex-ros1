@@ -62,7 +62,7 @@ To build from source you'll need to create a new workspace, clone and checkout t
         cd ~/ros-workspace 
         sudo apt-get update && rosdep update
         rosdep install --from-paths src --ignore-src -r -y
-        
+
 _Note: If building the master branch instead of a release branch you may need to also checkout and build the master branches of the packages this package depends on._
 
 - Build the packages
