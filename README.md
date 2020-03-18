@@ -92,7 +92,7 @@ An example launch file called `sample_application.launch` is provided.
 1. Go to Amazon Lex
 2. Create sample bot: BookTrip
 3. Select publish, create a new alias
-4. Modify the configuration file in `config/sample_configuration.yaml` to reflect the new alias
+4. Modify the configuration file in `config/sample_configuration.yaml` to reflect the new alias (rebuild the package if not modifying the configuration in the install space).
 
 ### Run the node
 - **With** launch file using parameters in .yaml format (example provided)
