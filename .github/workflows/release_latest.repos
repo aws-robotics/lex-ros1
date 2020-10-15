@@ -1,5 +1,5 @@
 repositories:
-  lex-ros1
+  lex-ros1:
     type: git
     url: https://github.com/aws-robotics/lex-ros1
     version: release-latest
