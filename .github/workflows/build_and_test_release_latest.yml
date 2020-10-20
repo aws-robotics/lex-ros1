@@ -26,13 +26,13 @@ jobs:
           ros_version: 1
     container:
       image: rostooling/setup-ros-docker:ubuntu-${{ matrix.ubuntu_distro }}-ros-${{ matrix.ros_distro }}-ros-base-latest
+    env:
+      # Needed for the CMakeLists.txt setup
+      ROS_DISTRO: ${{ matrix.ros_distro }}
+      ROS_VERSION: ${{ matrix.ros_version }}
     steps:
     # TODO(setup-ros-docker#7): calling chown is necessary for now
     - run: sudo chown -R rosbuild:rosbuild "$HOME" .
-    # Needed for the CMakeLists.txt setup
-    - run: export ROS_DISTRO=${{ matrix.ros_distro }}
-    # Needed for the CMakeLists.txt setup
-    - run: export ROS_VERSION=${{ matrix.ros_version }}
     # Needed to access the vcs repos file from the workspace
     - name: Checkout source
       uses: actions/checkout@v2
