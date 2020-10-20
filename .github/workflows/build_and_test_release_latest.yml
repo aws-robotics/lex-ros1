@@ -43,8 +43,14 @@ jobs:
         # schedule runs against the default branch (master), so specify release-latest via repos file
         vcs-repo-file-url: "${{ github.workspace }}/.github/workflows/release_latest.repos"
     # lex_common_msgs fails when building tests: Travis config allows tests to be filtered per package
-    - name: Build and run tests
-      run: bash -c 'source /opt/ros/${{ matrix.ros_distro }}/setup.sh && colcon build --packages-select ros_ws/src/lex-ros1/lex_node --cmake-target tests'
+    - name: Build with Tests
+      uses: ros-tooling/action-ros-ci@0.0.17
+      with:
+        source-ros-binary-installation: ${{ matrix.ros_distro }}
+        package-name: lex_node
+        # schedule runs against the default branch (master), so specify release-latest via repos file
+        vcs-repo-file-url: "${{ github.workspace }}/.github/workflows/release_latest.repos"
+        extra-cmake-args: --cmake-target tests
     - uses: actions/upload-artifact@v1
       with:
         name: colcon-logs-${{ matrix.ubuntu_distro }}-ros-${{ matrix.ros_distro }}
