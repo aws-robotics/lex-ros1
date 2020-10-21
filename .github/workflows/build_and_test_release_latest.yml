@@ -20,16 +20,14 @@ jobs:
         include:
         - ros_distro: kinetic
           ubuntu_distro: xenial
-          ros_version: 1
         - ros_distro: melodic
           ubuntu_distro: bionic
-          ros_version: 1
     container:
       image: rostooling/setup-ros-docker:ubuntu-${{ matrix.ubuntu_distro }}-ros-${{ matrix.ros_distro }}-ros-base-latest
     env:
       # Needed for the CMakeLists.txt setup
       ROS_DISTRO: ${{ matrix.ros_distro }}
-      ROS_VERSION: ${{ matrix.ros_version }}
+      ROS_VERSION: 1
     steps:
     # TODO(setup-ros-docker#7): calling chown is necessary for now
     - run: sudo chown -R rosbuild:rosbuild "$HOME" .
@@ -42,11 +40,6 @@ jobs:
         package-name: lex_common_msgs lex_node
         # schedule runs against the default branch (master), so specify release-latest via repos file
         vcs-repo-file-url: "${{ github.workspace }}/.github/workflows/release_latest.repos"
-    # lex_common_msgs fails when building tests: Travis config allows tests to be filtered per package
-    - name: Build and run tests
-      run: |
-        cd /__w/lex-ros1/lex-ros1/ros_ws/
-        bash -c 'source /opt/ros/${{ matrix.ros_distro }}/setup.sh && colcon build --packages-select lex_node --cmake-target tests'
     - uses: actions/upload-artifact@v1
       with:
         name: colcon-logs-${{ matrix.ubuntu_distro }}-ros-${{ matrix.ros_distro }}
